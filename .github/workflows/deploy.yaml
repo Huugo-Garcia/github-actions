@@ -13,7 +13,8 @@ jobs:
   # This is the runner, where the job will run
     runs-on: ubuntu-latest
     # These are the steps that will be executed in the job
-    step:
+    steps:
+      uses: actions/checkout@v4
       run: echo "Make pull request to deploy GitHub Actions repository"
       run: echo "Execute migrations"
       run: echo "Generate binaries"
