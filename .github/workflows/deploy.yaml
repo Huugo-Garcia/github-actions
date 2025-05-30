@@ -1,20 +1,19 @@
-# This is the Workflow name 
+# This is the Workflow name
 name: "deploy-github-actions-repo"
 
 # 'trigger' [on]
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
 
 # 'jobs' executes when the workflow is triggered. We need define the machine type and the steps to execute.
 jobs:
   deploy-github-actions-repo:
-  # This is the runner, where the job will run
+    # This is the runner, where the job will run
     runs-on: ubuntu-latest
     # These are the steps that will be executed in the job
     steps:
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - run: echo "Make pull request to deploy GitHub Actions repository"
       - run: echo "Execute migrations"
       - run: echo "Generate binaries"
