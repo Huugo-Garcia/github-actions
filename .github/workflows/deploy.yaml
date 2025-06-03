@@ -9,6 +9,8 @@ jobs:
       - name: Hola mundo
         run: echo "Hola mundo"
   second_job:
+    # This job depends on the first_job -> Es una dependencia
+    needs: first_job
     runs-on: ubuntu-latest
     steps:
       - name: Hola mundo
