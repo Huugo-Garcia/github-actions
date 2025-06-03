@@ -4,11 +4,11 @@ on: push
 
 jobs:
   first_job:
-  if ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hola mundo
-        run: echo "Hola mundo"
+  if: ${{ github.ref == 'refs/heads/main' }}
+  runs-on: ubuntu-latest
+  steps:
+    - name: Hola mundo
+      run: echo "Hola mundo"
   second_job:
     # This job depends on the first_job -> Es una dependencia
     # Si un job falla, los jobs que dependen de él no se ejecutarán
