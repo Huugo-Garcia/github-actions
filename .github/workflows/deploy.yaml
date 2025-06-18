@@ -4,6 +4,9 @@ on: push
 
 jobs:
   first_job:
+    # Los contextos nos permiten acceder a la informacion sobre los workflows que se están ejecutando
+    # En este caso, se ejecuta solo si el push es a la rama main
+    # Se puede usar el '&&' o '||' para combinar condiciones
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
@@ -17,3 +20,16 @@ jobs:
     steps:
       - name: Hola mundo
         run: echo "Hola mundo otra vez"
+        # Se puede definir un entorno para el job o a nivel de paso o a nivel de job
+        # Esto es útil para definir variables de entorno que se pueden usar en el job
+        env:
+          MY_ENV_VAR: "Hello World"
+        run: echo "El valor de MY_ENV_VAR es $MY_ENV_VAR"
+      # Usando una action de GitHub
+      #Los actions se ejecutan a nivel de step, buena practica asignarles un nombre descriptivo
+      # Se pueden usar acciones de GitHub o acciones personalizadas
+      - name: Action
+      #Directiva uses para usar una action de GitHub
+        uses: actions/checkout@v4
+      - name: working dir after action
+        run: ls -al
