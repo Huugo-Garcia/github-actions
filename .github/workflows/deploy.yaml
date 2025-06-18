@@ -18,6 +18,10 @@ jobs:
     # Si un job falla, los jobs que dependen de él no se ejecutarán
     needs: first_job
     runs-on: ubuntu-latest
+    # Se define outputs para que el tercer job pueda usar los outputs del segundo job
+    outputs:
+      # Se puede establecer una variable de salida que se puede usar en otros jobs
+      output_var: ${{ steps.set_output.outputs.output_var }}
     steps:
       - name: Hola mundo
         run: echo "Hola mundo otra vez"
@@ -41,9 +45,22 @@ jobs:
       # En este caso, se usa para establecer una variable de salida que se puede usar en otros jobs
       # Se puede usar para pasar datos entre jobs o para establecer variables de entorno
       - name: Set output variable
+        # Se tiene que establecer el id del paso para poder usar la variable de salida
         id: set_output
         run: echo "output_var= Mensaje almacenado" >> $GITHUB_OUTPUT
 
       # Usando la variable de salida establecida en el paso anterior
       - name: Use output variable
         run: echo "El valor de la variable de salida es ${{ steps.set_output.outputs.output_var }}"
+
+  third_job:
+    # Este job depende del segundo job
+    needs: second_job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hola mundo
+        run: echo "Hola mundo otra vez"
+      - name: Use output variable from second job
+        # Se puede usar la variable de salida del segundo job a traves de la directiva needs,
+        # ya que el segundo job es una dependencia del tercer job
+        run: echo "El valor de la variable de salida es ${{ needs.second_job.outputs.output_var }}"
