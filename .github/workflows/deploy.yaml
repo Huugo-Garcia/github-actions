@@ -78,3 +78,9 @@ jobs:
           # El nombre del artefacto que se va a subir y el path del archivo que se va a subir
           name: test-artifact
           path: test.log
+      # Para descargar un artefacto, se puede usar la action de GitHub actions/download-artifact
+      - name: Descargar artefacto
+        uses: actions/download-artifact@v4
+        with:
+          # El nombre del artefacto que se va a descargar
+          name: test-artifact
