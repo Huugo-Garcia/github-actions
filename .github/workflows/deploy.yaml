@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Hola mundo
         run: echo "Hola mundo"
+
   second_job:
     # This job depends on the first_job -> Es una dependencia
     # Si un job falla, los jobs que dependen de él no se ejecutarán
@@ -20,11 +21,13 @@ jobs:
     steps:
       - name: Hola mundo
         run: echo "Hola mundo otra vez"
+
         # Se puede definir un entorno para el job o a nivel de paso o a nivel de job
         # Esto es útil para definir variables de entorno que se pueden usar en el job
         env:
           MY_ENV_VAR: "Hello World"
           run: echo "El valor de MY_ENV_VAR es $MY_ENV_VAR"
+
       # Usando una action de GitHub
       #Los actions se ejecutan a nivel de step, buena practica asignarles un nombre descriptivo
       # Se pueden usar acciones de GitHub o acciones personalizadas
@@ -33,3 +36,14 @@ jobs:
         uses: actions/checkout@v4
       - name: working dir after action
         run: ls -al
+
+      # GITHUB_OUTPUT es una variable de entorno que se puede usar para pasar datos entre jobs
+      # En este caso, se usa para establecer una variable de salida que se puede usar en otros jobs
+      # Se puede usar para pasar datos entre jobs o para establecer variables de entorno
+      - name: Set output variable
+        id: set_output
+        run: echo "output_var= Mensaje almacenado" >> $GITHUB_OUTPUT
+
+      # Usando la variable de salida establecida en el paso anterior
+      - name: Use output variable
+        run: echo "El valor de la variable de salida es ${{ steps.set_output.outputs.output_var }}"
