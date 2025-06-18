@@ -64,3 +64,17 @@ jobs:
         # Se puede usar la variable de salida del segundo job a traves de la directiva needs,
         # ya que el segundo job es una dependencia del tercer job
         run: echo "El valor de la variable de salida es ${{ needs.second_job.outputs.output_var }}"
+
+      # Artefactos
+      # Los artefactos son archivos que se pueden guardar y usar en otros jobs o workflows
+      - name: Generar archivo
+        run: |
+          echo "Este es un archivo de ejemplo" > test.log
+      # Para subir un artefacto, se puede usar la action de GitHub actions/upload-artifact
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          # Se tienen que pasar parametros a la action
+          # El nombre del artefacto que se va a subir y el path del archivo que se va a subir
+          name: test-artifact
+          path: test.log
